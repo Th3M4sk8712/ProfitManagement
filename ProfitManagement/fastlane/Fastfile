@@ -1,0 +1,27 @@
+default_platform(:ios)
+platform :ios do
+ desc “Build, and push a release to AppCenter”
+ 
+ lane :appcenter_release do
+  build
+  appcenter_upload(
+   api_token: ENV['APPCENTER_KEY'],
+   owner_name: ENV['APPCENTER_OWNER'],
+   app_name: ENV['APPCENTER_APPNAME'],
+   file: ENV['IPA_PATH'],
+   notify_testers: true,
+   destinations: "*"
+  )
+  clean_build_artifacts
+ end
+
+ lane :build do
+  gym(
+  scheme: ENV['SCHEME'], 
+  clean: true,
+  export_method: ENV['IOS_EXPORT_METHOD'],
+  output_directory: './builds',
+  xcargs: "-allowProvisioningUpdates"
+  )
+ end
+end

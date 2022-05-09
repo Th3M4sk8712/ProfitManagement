@@ -1,0 +1,6 @@
+framework module Pods_ProfitManagement {
+  umbrella header "Pods-ProfitManagement-umbrella.h"
+
+  export *
+  module * { export * }
+}
